@@ -1,0 +1,24 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity fullsub is
+port( 
+		X,Y,Bin:in bit;
+		D,Bout:out bit
+	);
+end fullsub;
+
+architecture bev of fullsub is
+signal s1,s2,s3,s4,s5: bit;
+begin
+	process(X,Y,Bin)
+	begin
+		s1<=X xor Y;
+		s2<=not X;
+		s3<=not s1;
+		s4<=Bin and s3;
+		s5<=Y and s2;
+		D<= s1 xor Bin;
+		Bout<= s4 or s5;
+	end process;
+end bev;

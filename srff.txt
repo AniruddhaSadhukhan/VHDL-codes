@@ -1,0 +1,30 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity srflipflop is
+port(
+S,R,Clk: in std_logic;
+Q,Qbar: out std_logic);
+end entity;
+
+architecture bev of srflipflop is
+begin
+process(Clk)
+variable tmp: std_logic;
+begin
+if(Clk='1' and clk'Event) then
+	if(S='0' and R='0') then
+		tmp:=tmp;
+	elsif(S='0' and R='1') then
+		tmp:='0';
+	elsif(S='1' and R='0') then
+		tmp:='1';
+	else
+		tmp:='Z';
+	end if;
+end if;
+Q<=tmp;
+Qbar<=not tmp;
+end process;
+end bev;
+	

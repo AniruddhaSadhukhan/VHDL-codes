@@ -1,0 +1,31 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
+
+entity encoderr2 is
+port(
+	I: in std_logic_vector(7 downto 0);
+	O: out std_logic_vector(2 downto 0)
+);
+end encoderr2;
+
+architecture bev of encoderr2 is
+begin
+	process(I)
+	begin
+	case I is
+	when "00000001" => O<="000";
+	when "00000010" => O<="001";
+	when "00000100" => O<="010";
+	when "00001000" => O<="011";
+	when "00010000" => O<="100";
+	when "00100000" => O<="101";
+	when "01000000" => O<="110";
+	when "10000000" => O<="111";
+	when others => O<="000";
+	end case;
+	end process;
+end bev;
+		
+	

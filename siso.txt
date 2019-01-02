@@ -1,0 +1,23 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity siso is
+port(
+	Sin,Clk,Reset,Preset: in std_logic;
+	Q:out std_logic
+	);
+end entity;
+
+ architecture bev of siso is
+ begin
+ process(Sin,Clk,Reset,Preset)
+ variable temp: std_logic_vector(3 downto 0):="0000";
+ begin
+ if(Reset = '1') then
+	temp:="0000";
+ elsif (preset='1' and rising_edge(Clk)) then
+	temp(3 downto 0):=temp(2 downto 0) & Sin;
+ end if;
+ Q<=temp(3);
+ end process;
+ end bev;

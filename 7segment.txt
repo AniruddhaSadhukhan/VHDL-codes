@@ -1,0 +1,28 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity seven is
+port(
+I:in std_logic_vector(0 to 9);
+O: out std_logic_vector(0 to 6));
+end entity;
+
+architecture bev of seven is
+begin
+process(I)
+begin
+	case I is
+		when "1000000000" => O<=not "1111110";
+		when "0100000000" => O<=not "0110000";
+		when "0010000000" => O<=not "1101101";
+		when "0001000000" => O<=not "1111001";
+		when "0000100000" => O<=not "0110011";
+		when "0000010000" => O<=not "1011011";
+		when "0000001000" => O<=not "0011111";
+		when "0000000100" => O<=not "1110000";
+		when "0000000010" => O<=not "1111111";
+		when "0000000001" => O<=not "1110011";
+		when others => O<=not "1001111";
+	end case;
+end process;
+end architecture;

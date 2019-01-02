@@ -1,0 +1,22 @@
+library  ieee;
+use ieee.std_logic_1164.all;
+
+entity demuxx is
+port(
+O:out bit_vector(7 downto 0);
+S:in bit_vector(2 downto 0);
+I:in bit
+);
+end demuxx;
+
+architecture bev of demuxx is
+begin
+O(0)<=I when S="000" else '0';
+O(1)<=I when S="001" else '0';
+O(2)<=I when S="010" else '0';
+O(3)<=I when S="011" else '0';
+O(4)<=I when S="100" else '0';
+O(5)<=I when S="101" else '0';
+O(6)<=I when S="110" else '0';
+O(7)<=I when S="111" else '0';
+end bev;

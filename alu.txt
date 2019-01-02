@@ -1,0 +1,62 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity alu_new is
+port(
+	A,B:in signed(3 downto 0);
+	S: in std_logic_vector(3 downto 0);
+	M: in std_logic;
+	Y: out signed(3 downto 0)
+	);
+end alu_new;
+
+architecture bev of alu_new is
+
+
+begin
+process(A,B,S,M)
+--variable A: signed(3 downto 0) := "0101";
+--variable B: signed(3 downto 0) := "1011";
+begin
+if M='1' then
+case S is
+	when x"0" => Y<=not A;
+	when x"1" => Y<=not(A and B);
+	when x"2" => Y<=(not A) or B;
+	when x"3" => Y<=x"1";
+	when x"4" => Y<=(not A) or (not B);
+	when x"5" => Y<=not B;
+	when x"6" => Y<=(not A) xor (not B);
+	when x"7" => Y<=A or (not B);
+	when x"8" => Y<=(not A) and B;
+	when x"9" => Y<=A xor B;
+	when x"A" => Y<=B;
+	when x"B" => Y<=A or B;
+	when x"C" => Y<=x"0";
+	when x"D" => Y<=A and (not B);
+	when x"E" => Y<=A and B;
+	when x"F" => Y<=A;
+end case;
+elsif M='0' then
+case S is
+	when x"0" => Y<=A-1;
+	when x"1" => Y<=(A and B)-1;
+	when x"2" => Y<=(A and (not B))-1;
+	when x"3" => Y<=x"F";
+	when x"4" => Y<=A + (A or (not B));
+	when x"5" => Y<=(A and B)+(A or (not B));
+	when x"6" => Y<=A-B-1;
+	when x"7" => Y<=A + (not B);
+	when x"8" => Y<=A + (A or B);
+	when x"9" => Y<=A + B;
+	when x"A" => Y<=(A and (not B))+(A or B);
+	when x"B" => Y<=A + B;
+	when x"C" => Y<=A + A;
+	when x"D" => Y<=(A and B)+A;
+	when x"E" => Y<=(A and (not B))-A;
+	when x"F" => Y<=A;
+end case;
+end if;
+end process;
+end bev;

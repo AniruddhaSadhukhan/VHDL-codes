@@ -1,0 +1,59 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+entity sram is
+generic(
+	width:	integer:=4;		--it is the word length
+	depth: 	integer:=4;		--number of rows or words
+	addr: 	integer:=2		--number of bit needed to represent the depth number of rows
+	);
+port(
+	clk,En,Read,Write: in std_logic;
+																-- Read/Write are highlighted in red, because these
+																-- are keywords. When we use Read (instead of say Read1),
+																-- then we can use it with a processor as well since
+																-- 'Read' is recognised by the CPU. If we use say 'Read1',
+																-- then the priority of this READ operation may not be same as 'Read'
+	Read_Addr,Write_Addr: in std_logic_vector(addr-1 downto 0);
+	Data_in: in std_logic_vector(width-1 downto 0);
+	Data_out: out std_logic_vector(width-1 downto 0)
+	);
+end sram;
+
+architecture bev of sram is
+--use array to define the bunch of internal temporary signals
+type ram_type is array (0 to depth-1) of std_logic_vector(width-1 downto 0);
+signal tmp_ram:ram_type;
+begin	
+	--read functional section
+	process(Clk,En,Read,Read_Addr)
+	begin
+		if(clk'event and clk='1') then
+			if En='1' then
+				if Read='1' then
+					--buildin function conv_integer change the type
+					--from std_logic_vector to integer
+					Data_out<=tmp_ram(conv_integer(Read_Addr));
+				else
+					Data_out<=(others=>'Z');
+				end if;
+			end if;
+		end if;
+	end process;
+	
+	--Write functional section
+	process(Clk,En,Write,Write_Addr,Data_in)
+	begin
+		if(clk'event and clk='1') then
+			if En='1' then
+				if Write='1' then
+					tmp_ram(conv_integer(Write_Addr))<=Data_in;
+				end if;
+			end if;
+		end if;
+	end process;
+
+end bev;
+	

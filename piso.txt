@@ -1,0 +1,26 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity pisoo is
+port(
+	I: in std_logic_vector(3 downto 0);
+	Clk,Reset,Load: in std_logic;
+	Sout: out std_logic
+	);
+end pisoo;
+
+architecture bev of pisoo is
+begin
+process(Clk,Load,Reset,I)
+variable temp : std_logic_vector(3 downto 0):="0000";
+begin
+if (Reset='1') then 
+temp:="0000";
+elsif(load='1') then
+temp:=I;
+elsif(rising_edge(Clk)) then
+Sout<=temp(0);
+temp:="0" & temp(3 downto 1);
+end if;
+end process;
+end architecture;

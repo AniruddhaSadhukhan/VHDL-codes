@@ -1,0 +1,32 @@
+library  ieee;
+use ieee.std_logic_1164.all;
+
+entity muxx2 is
+port(
+D:in bit_vector(7 downto 0);
+S:in bit_vector(2 downto 0);
+Y:out bit
+);
+end muxx2;
+
+architecture bev of muxx2 is
+begin
+
+	process(D,S)
+	begin 
+		case S is
+			when "000" => Y<=D(0);
+			when "001" => Y<=D(1);
+			when "010" => Y<=D(2);
+			when "011" => Y<=D(3);
+			when "100" => Y<=D(4);
+			when "101" => Y<=D(5);
+			when "110" => Y<=D(6);
+			when "111" => Y<=D(7);
+			end case;
+			
+	end process;
+end bev;
+
+		
+		
